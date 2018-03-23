@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Specify the refresh internal in seconds. -->
+<Configuration monitorInterval="5">
+	<Properties>
+        <Property name="baseDir">./logs/</Property>
+    </Properties>
+    <Appenders>
+        <Console name="platformConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %p [%c] - &lt;%m&gt;%n"/>
+        </Console>
+
+        <RollingFile name="platformFile" fileName="${baseDir}/platform.log" append="true"
+                     filePattern="${baseDir}/platform-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout pattern="%d %p [%c] - &lt;%m&gt;%n"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    
+    <Loggers>
+    	<AsyncLogger name="org.springframework.web" level="info" additivity="false">
+            <AppenderRef ref="platformConsole"/>
+            <AppenderRef ref="platformFile"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.springframework.boot" level="info" additivity="false">
+            <AppenderRef ref="platformConsole"/>
+            <AppenderRef ref="platformFile"/>
+        </AsyncLogger>
+        <AsyncLogger name="cn.com.trcbank.payplatform" level="info" additivity="false">
+            <AppenderRef ref="platformConsole"/>
+            <AppenderRef ref="platformFile"/>
+        </AsyncLogger>
+        <AsyncLogger name="UNIONPAY_SDK_LOG" level="info" additivity="false">
+            <AppenderRef ref="platformConsole"/>
+            <AppenderRef ref="platformFile"/>
+        </AsyncLogger>
+        <AsyncLogger name="UNIONPAY_SDK_ERR_LOG" level="info" additivity="false">
+            <AppenderRef ref="platformConsole"/>
+            <AppenderRef ref="platformFile"/>
+        </AsyncLogger>
+        <AsyncLogger name="UNIONPAY_SDK_MSG_LOG" level="info" additivity="false">
+            <AppenderRef ref="platformConsole"/>
+            <AppenderRef ref="platformFile"/>
+        </AsyncLogger>
+        <AsyncRoot level="error">
+            <AppenderRef ref="platformConsole"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>
